@@ -1,39 +1,76 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/users/login'; // Ajusta la URL según tu configuración
-  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:8080'; // Cambia esto a la URL de tu backend
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { user: username, password: password });
+  private tokenKey = 'jwtToken';
+  private refreshTokenKey = 'jwtRefreshToken';
+
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ){}
+
+  login(data:any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/users/login`, data).pipe(
+      tap(response => {
+        if(response.token){
+          this.setToken(response.token);
+        }
+      })
+    )
   }
 
-  setToken(token: string): void {
-    localStorage.setItem('authToken', token);
-    this.loggedIn.next(true);
-  }
+public setToken(token: string): void {
+  localStorage.setItem(this.tokenKey, token);
+}
+  
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
+public getToken(): string | null {
+  if(typeof window !== 'undefined'){
+    return localStorage.getItem(this.tokenKey);
+  } else {
+    return null;
   }
+}
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
+private setRefreshToken(token: string): void {
+  localStorage.setItem(this.refreshTokenKey, token);
+}
+
+private getRefreshToken(): string | null {
+  if(typeof window !== 'undefined'){
+    return localStorage.getItem(this.refreshTokenKey)
+  } else {
+    return null;
+  }
+}
+
+
+
+  isAuthenticated(): boolean {
+    // Verificar si el token existe y no ha expirado
+    const token = this.getToken();
+    if(!token){
+      return false;
+    }
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp * 1000;
+    return Date.now() < exp;
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    this.loggedIn.next(false);
-  }
-
-  getLoggedInStatus(): Observable<boolean> {
-    return this.loggedIn.asObservable();
+    // Eliminar el token de localStorage
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    this.router.navigate(['/login']);
   }
 }

@@ -1,36 +1,35 @@
-<div class="container mt-5">
-  <div class="card mx-auto" style="max-width: 400px;">
-    <div class="card-header text-center">
-      <h3>Iniciar Sesión</h3>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+  <!-- Header -->
+  <header class="bg-white border-bottom py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h3 m-0">Events</h1>
     </div>
-    <div class="card-body">
-      <form (ngSubmit)="login()">
-        <div class="form-group">
-          <label for="login">Usuario</label>
-          <input
-            type="text"
-            id="login"
-            class="form-control"
-            name="username"
-            placeholder="Usuario"
-            required
-            #usernameInput
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            class="form-control"
-            name="password"
-            placeholder="Contraseña"
-            required
-            #passwordInput
-          />
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
-      </form>
+  </header>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <h3>Iniciar Sesion</h3>
     </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario" [(ngModel)]="username">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña" [(ngModel)]="password">
+      <input type="submit" class="fadeIn fourth" value="Iniciar Sesion">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Olvidaste tu contraseña?</a>
+    </div>
+
   </div>
 </div>
