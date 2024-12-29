@@ -28,6 +28,16 @@ export class AuthService {
     )
   }
 
+  registrar(data:any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/users/POST`, data).pipe(
+      tap(response => {
+        if(response.token){
+          this.setToken(response.token);
+        }
+      })
+    )
+  }
+
 public setToken(token: string): void {
   localStorage.setItem(this.tokenKey, token);
 }

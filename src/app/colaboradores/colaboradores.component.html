@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos Activos</title>
+  <title>Colaboradores</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans flex flex-col min-h-screen">
   <!-- Header -->
   <header class="bg-blue-500 text-white py-4 shadow">
     <div class="container mx-auto flex justify-between items-center px-4">
-      <h1 class="text-2xl font-bold">Eventos Activos</h1>
+      <h1 class="text-2xl font-bold">Colaboradores</h1>
       <nav class="flex space-x-4">
-        <a href="#" class="hover:underline">Eventos</a>
+        <a href="#" class="hover:underline" [routerLink]="['../home']">Eventos</a>
         <a href="#" class="hover:underline" [routerLink]="['../colaboradores']">Colaboradores</a>
         <a href="#" class="hover:underline">Nuevo evento</a>
         <a href="#" class="hover:underline">Invitados</a>
-        <button href="#" class="hover:underline text-red-300" (click)="onLogout()">LogOut</button>
+        <button href="#" class="hover:underline text-red-300">LogOut</button>
       </nav>
     </div>
   </header>
@@ -28,8 +28,8 @@
       <!-- Event Card -->
       <div class="bg-white shadow rounded-lg p-4">
         <img src="https://imgs.search.brave.com/QGBYjtrtbCDW0QTqALjqIUU0M_ZCdXehKyygLcQ0pTk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yb2Nr/Y29udGVudC5jb20v/ZXMvd3AtY29udGVu/dC91cGxvYWRzL3Np/dGVzLzMvMjAyMi8w/Ny9nb29nbGUtaW1h/Z2VzLTIzLnBuZw" alt="" srcset="">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
+        <h2 class="text-lg font-semibold text-gray-800">Nombre del Servicio</h2>
+        <p class="text-sm text-gray-600 mt-2">Descripción.</p>
         <div class="mt-4 flex justify-between items-center">
           <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
           <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
@@ -67,3 +67,4 @@
   </footer>
 </body>
 </html>
+
