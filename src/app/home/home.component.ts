@@ -19,6 +19,7 @@ export default class HomeComponent {
  ngOnInit() {
   this.currentUser = localStorage.getItem('username');
   const userId = localStorage.getItem('idUser'); // Obtener el ID del usuario
+  let idEvent = "";
 
   if (userId) {
     this.authService.obtenerEventosPorUsuario(userId).subscribe(
@@ -33,7 +34,25 @@ export default class HomeComponent {
   } else {
     console.warn('ID del usuario no encontrado en localStorage');
   }
+
 }
+
+deleteEvent(idEvent: string): void {
+  if (idEvent) {
+    this.authService.deleteEventById(idEvent).subscribe(
+      (data) => {
+        console.log('Evento eliminado:', data);
+        // Actualizar la lista de eventos después de eliminar
+        this.eventos = this.eventos.filter(evento => evento.id !== idEvent);
+      },
+      (error) => {
+        console.error('Error al eliminar evento:', error);
+      }
+    );
+  }
+}
+
+
 
   onLogout() {
     this.authService.logout();

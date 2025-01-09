@@ -44,6 +44,11 @@ export class AuthService {
   obtenerEventosPorUsuario(userId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/evento/GET/${userId}`);
   }
+
+  deleteEventById(idEvent: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/evento/DELETE/${idEvent}`, { responseType: 'text' });
+  }
+  
   
 
   login(data:any): Observable<any> {
