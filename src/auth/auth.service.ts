@@ -18,11 +18,41 @@ export class AuthService {
     private router: Router
   ){}
 
+  crearEvento(
+    nombre: string,
+    descripcion: string,
+    fecha: string,
+    lugar: string,
+    contacto: string,
+    imagen: File,
+    userID: string
+  ): Observable<any> {
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('fecha', fecha);
+    formData.append('lugar', lugar);
+    formData.append('contacto', contacto);
+    formData.append('imagen', imagen);
+    if (userID) {
+      formData.append('id_Usuario', userID); // Adjuntar el ID del usuario
+    }
+
+    return this.http.post<any>(`${this.apiUrl}/evento/POST`, formData);
+  }
+
+  obtenerEventosPorUsuario(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/evento/GET/${userId}`);
+  }
+  
+
   login(data:any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/users/login`, data).pipe(
       tap(response => {
         if(response.token){
           this.setToken(response.token);
+          localStorage.setItem('username', response.username);
+          localStorage.setItem('idUser', response.idUser);
         }
       })
     )
@@ -79,8 +109,9 @@ private getRefreshToken(): string | null {
   logout(): void {
     // Eliminar el token de localStorage
     localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem('username');
+    localStorage.removeItem('idUser');
     localStorage.removeItem('password');
+    localStorage.removeItem('username');
     this.router.navigate(['/login']);
   }
 }

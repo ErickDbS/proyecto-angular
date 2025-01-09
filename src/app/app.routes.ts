@@ -24,4 +24,9 @@ export const routes: Routes = [
     loadComponent: ()=> import('./colaboradores/colaboradores.component'),
     canActivate: [AuthGuard]
   },
-];
+  {
+    path: 'crear evento',
+    loadComponent: ()=> import('./create-event/create-event.component'),
+    canActivate: [AuthGuard]
+  }
+  ];

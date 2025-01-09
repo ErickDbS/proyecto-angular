@@ -12,47 +12,33 @@
     <div class="container mx-auto flex justify-between items-center px-4">
       <h1 class="text-2xl font-bold">Eventos Activos</h1>
       <nav class="flex space-x-4">
-        <a href="#" class="hover:underline">Eventos</a>
+        <a href="#" class="hover:underline" [routerLink]="['../home']">Eventos</a>
         <a href="#" class="hover:underline" [routerLink]="['../colaboradores']">Colaboradores</a>
-        <a href="#" class="hover:underline">Nuevo evento</a>
+        <a href="#" class="hover:underline" [routerLink]="['../crear evento']">Nuevo evento</a>
         <a href="#" class="hover:underline">Invitados</a>
         <button href="#" class="hover:underline text-red-300" (click)="onLogout()">LogOut</button>
       </nav>
     </div>
   </header>
 
+  <p class="inline-block mr-4 text-black-500 text-2xl m-5">Bienvenido, {{ currentUser }}</p>
   <!-- Main Content -->
   <main class="container mx-auto py-8 px-4 flex-grow">
     <!-- Event Cards -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Event Card -->
-      <div class="bg-white shadow rounded-lg p-4">
-        <img src="https://imgs.search.brave.com/QGBYjtrtbCDW0QTqALjqIUU0M_ZCdXehKyygLcQ0pTk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yb2Nr/Y29udGVudC5jb20v/ZXMvd3AtY29udGVu/dC91cGxvYWRzL3Np/dGVzLzMvMjAyMi8w/Ny9nb29nbGUtaW1h/Z2VzLTIzLnBuZw" alt="" srcset="">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
-        </div>
-      </div>
-      <!-- Repeat Event Card -->
-      <div class="bg-white shadow rounded-lg p-4">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
-        </div>
-      </div>
-      <div class="bg-white shadow rounded-lg p-4">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
+      <div *ngFor="let evento of eventos" class="bg-white shadow rounded-lg p-4">
+        <img [src]="evento.imagenUrl || 'ruta/default/imagen.png'" alt="{{ evento.nombre }}" class="w-full h-40 object-cover rounded">
+        <h2 class="text-lg font-semibold text-gray-800">{{ evento.nombre }}</h2>
+        <p class="text-sm text-gray-600 mt-2">{{ evento.descripcion }}</p>
+        <p class="text-sm text-gray-600 mt-2">Fecha: {{ evento.fecha }}</p>
+        <p class="text-sm text-gray-600 mt-2">Lugar: {{ evento.lugar }}</p>
         <div class="mt-4 flex justify-between items-center">
           <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
           <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
         </div>
       </div>
     </section>
+    
   </main>
 
   <!-- Footer -->
