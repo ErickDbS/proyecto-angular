@@ -28,5 +28,19 @@ export const routes: Routes = [
     path: 'crear evento',
     loadComponent: ()=> import('./create-event/create-event.component'),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard-colaborador',
+    loadComponent: ()=> import('./dashboard-colaborador/dashboard-colaborador.component'),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'colaborador-eventos',
+    loadComponent: ()=> import('./dashboard-colaborador/colaborator-events/colaborator-events.component'),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'nuevo-servicio',
+    loadComponent: ()=> import('./dashboard-colaborador/create-colaborator-service/create-colaborator-service.component')
   }
   ];

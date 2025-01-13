@@ -1,34 +1,94 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Header -->
-<header class="bg-white border-bottom py-3">
-  <div class="container d-flex justify-content-between align-items-center">
-    <h1 class="h3 m-0">Events</h1>
-  </div>
-</header>
-
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <!-- Tabs Titles -->
-
-    <!-- Icon -->
-    <div class="fadeIn first">
-      <h3>Registrar Usuario</h3>
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+    <!-- Título -->
+    <div class="text-center mb-6">
+      <h3 class="text-2xl font-bold text-gray-700">Registro</h3>
     </div>
 
-    <!-- Registration Form -->
-    <form (ngSubmit)="registrar()">
-      <input type="text" id="username" class="fadeIn second" name="username" placeholder="Usuario" [(ngModel)]="username">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="Contraseña" [(ngModel)]="password">
-      <input type="password" id="confirmPassword" class="fadeIn third" name="confirmPassword" placeholder="Confirmar Contraseña" [(ngModel)]="confirmPassword">
-      <input type="submit" class="fadeIn fourth" value="Registrar">
+    <!-- Botones de Selección -->
+    <div class="flex justify-center gap-4 mb-6">
+      <button 
+        class="px-4 py-2 rounded text-white font-medium transition-all 
+               focus:outline-none 
+               bg-blue-500 hover:bg-blue-600"
+        [ngClass]="{ 'bg-blue-700': tipoRegistro === 'usuario' }"
+        (click)="seleccionarTipo('usuario')">
+        Usuario Normal
+      </button>
+      <button 
+        class="px-4 py-2 rounded text-white font-medium transition-all 
+               focus:outline-none 
+               bg-green-500 hover:bg-green-600"
+        [ngClass]="{ 'bg-green-700': tipoRegistro === 'colaborador' }"
+        (click)="seleccionarTipo('colaborador')">
+        Colaborador
+      </button>
+    </div>
+
+    <!-- Formulario Usuario Normal -->
+    <form *ngIf="tipoRegistro === 'usuario'" (ngSubmit)="registrarUsuario()" class="space-y-4">
+      <h4 class="text-lg font-semibold text-gray-600">Registrar Usuario Normal</h4>
+      <input 
+        type="text" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-300 focus:outline-none" 
+        placeholder="Usuario" 
+        [(ngModel)]="username" 
+        name="username">
+      <input 
+        type="password" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-300 focus:outline-none" 
+        placeholder="Contraseña" 
+        [(ngModel)]="password" 
+        name="password">
+      <input 
+        type="password" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-300 focus:outline-none" 
+        placeholder="Confirmar Contraseña" 
+        [(ngModel)]="confirmPassword" 
+        name="confirmPassword">
+      <button 
+        type="submit" 
+        class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+        Registrar
+      </button>
+    </form>
+
+    <!-- Formulario Colaborador -->
+    <form *ngIf="tipoRegistro === 'colaborador'" (ngSubmit)="registrarColaborador()" class="space-y-4">
+      <h4 class="text-lg font-semibold text-gray-600">Registrar Colaborador</h4>
+      <input 
+        type="text" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-green-300 focus:outline-none" 
+        placeholder="Nombre del Propietario" 
+        [(ngModel)]="nombre" 
+        name="ownerName">
+      <input 
+        type="text" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-green-300 focus:outline-none" 
+        placeholder="Correo Electrónico" 
+        [(ngModel)]="email" 
+        name="email">
+      <input 
+        type="password" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-green-300 focus:outline-none" 
+        placeholder="Contraseña" 
+        [(ngModel)]="pass" 
+        name="colabPassword">
+        <input 
+        type="password" 
+        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-green-300 focus:outline-none" 
+        placeholder="Confirmar Contraseña" 
+        name="colabReConfirmPassword">
+      <button 
+        type="submit" 
+        class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">
+        Registrar
+      </button>
     </form>
 
     <!-- Footer -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">¿Ya tienes una cuenta? Inicia sesión</a>
+    <div class="text-center mt-6">
+      <a href="#" class="text-blue-500 hover:underline" [routerLink]="['../login']">¿Ya tienes una cuenta? Inicia sesión</a>
     </div>
   </div>
 </div>
