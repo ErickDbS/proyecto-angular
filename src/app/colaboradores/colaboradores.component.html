@@ -14,7 +14,7 @@
       <nav class="flex space-x-4">
         <a href="#" class="hover:underline" [routerLink]="['../home']">Eventos</a>
         <a href="#" class="hover:underline" [routerLink]="['../colaboradores']">Colaboradores</a>
-        <a href="#" class="hover:underline">Nuevo evento</a>
+        <a href="#" class="hover:underline" [routerLink]="['../crear evento']">Nuevo evento</a>
         <a href="#" class="hover:underline">Invitados</a>
         <button href="#" class="hover:underline text-red-300">LogOut</button>
       </nav>
@@ -23,36 +23,23 @@
 
   <!-- Main Content -->
   <main class="container mx-auto py-8 px-4 flex-grow">
-    <!-- Event Cards -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Event Card -->
-      <div class="bg-white shadow rounded-lg p-4">
-        <img src="https://imgs.search.brave.com/QGBYjtrtbCDW0QTqALjqIUU0M_ZCdXehKyygLcQ0pTk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yb2Nr/Y29udGVudC5jb20v/ZXMvd3AtY29udGVu/dC91cGxvYWRzL3Np/dGVzLzMvMjAyMi8w/Ny9nb29nbGUtaW1h/Z2VzLTIzLnBuZw" alt="" srcset="">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Servicio</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción.</p>
+      <div *ngFor="let servicio of servicios" class="bg-white shadow rounded-lg p-4">
+        <img [src]="'http://localhost:8080' + servicio.imagenUrl || 'assets/default-image.png'" 
+             alt="{{ servicio.nombre }}" 
+             class="w-full h-40 object-cover rounded">
+        <h2 class="text-lg font-semibold text-gray-800">{{ servicio.nombreNegocio }}</h2>
+        <p class="text-sm text-gray-600 mt-2">Teléfono: {{ servicio.telefono }}</p>
+        <p class="text-sm text-gray-600 mt-2">Precio: ${{ servicio.precio }}</p>
+        <p class="text-sm text-gray-600 mt-2">{{ servicio.descripcion }}</p>
+        <p class="text-sm text-gray-600 mt-2">Dirección: {{ servicio.direccion }}</p>
         <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
-        </div>
-      </div>
-      <!-- Repeat Event Card -->
-      <div class="bg-white shadow rounded-lg p-4">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
-        </div>
-      </div>
-      <div class="bg-white shadow rounded-lg p-4">
-        <h2 class="text-lg font-semibold text-gray-800">Nombre del Evento</h2>
-        <p class="text-sm text-gray-600 mt-2">Descripción del evento.</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
+          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Contratar</button>
         </div>
       </div>
     </section>
+    
+    
   </main>
 
   <!-- Footer -->

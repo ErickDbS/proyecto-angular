@@ -1,66 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Colaborador</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-  <!-- Dashboard Container -->
-  <div class="flex h-screen">
-    
-    <!-- Sidebar -->
-    <aside class="w-64 bg-blue-600 text-white flex flex-col">
-      <div class="py-4 px-6 text-2xl font-bold border-b border-blue-500">
-        <span>Bienvenido</span> <br>
-        <span>{{currentUser}}</span>
-      </div>
-      <nav class="flex-1 px-4 py-6 space-y-4">
-        <a class="block py-2 px-4 rounded hover:bg-blue-700" [routerLink]="['../dashboard-colaborador']">Inicio</a>
-        <a class="block py-2 px-4 rounded hover:bg-blue-700" [routerLink]="['/colaborador-eventos']">Eventos</a>
-        <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700">Crear Nuevo Servicio</a>
-        <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700">Historial</a>
-        <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700">Perfil</a>
-      </nav>
-      <div class="p-4 border-t border-blue-500">
-        <a href="#" class="block py-2 px-4 text-center bg-red-500 rounded hover:bg-red-600">
-          Cerrar sesión
-        </a>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
-      
-      <!-- Top Bar -->
-      <header class="bg-white shadow flex items-center justify-between px-6 py-4">
-        <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
-        <div class="flex items-center space-x-4">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            class="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-          />
-          <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Buscar
-          </button>
-        </div>
-      </header>
-      
-      <!-- Main Dashboard Content -->
-      <main class="flex-1 overflow-y-auto p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Card 1 -->
-          <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-lg font-semibold text-gray-700">Eventos Activos</h2>
-            <p class="mt-2 text-3xl font-bold text-blue-600">12</p>
-          </div>
-        </div>
-        
-      </main>
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-600 text-white flex flex-col">
+    <div class="py-4 px-6 text-2xl font-bold border-b border-blue-500">
+      <span>Bienvenido</span> <br />
+      <span>{{ currentUser }}</span>
     </div>
+    <nav class="flex-1 px-4 py-6 space-y-4">
+      <a
+        class="block py-2 px-4 rounded hover:bg-blue-700"
+        [routerLink]="['/dashboard-colaborador']"
+        >Inicio</a
+      >
+      <a
+        class="block py-2 px-4 rounded hover:bg-blue-700"
+        [routerLink]="['/colaborador-eventos']"
+        >Eventos</a
+      >
+      <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700" [routerLink]="['/nuevo-servicio']">Crear Nuevo Servicio</a>
+      <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700">Historial</a>
+      <a href="#" class="block py-2 px-4 rounded hover:bg-blue-700">Perfil</a>
+    </nav>
+    <div class="p-4 border-t border-blue-500">
+      <button
+        class="block py-2 px-4 text-center bg-red-500 rounded hover:bg-red-600 w-full"
+        (click)="onLogout()"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    <header class="bg-white shadow flex items-center justify-between px-6 py-4">
+      <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
+      <div class="flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+        />
+        <button
+          class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        >
+          Buscar
+        </button>
+      </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6">
+      <ul class="space-y-4">
+        <li
+          *ngFor="let servicio of servicios"
+          class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center"
+        >
+          <div class="flex items-center space-x-4">
+            <img
+              [src]="'http://localhost:8080' + servicio.imagenUrl || 'assets/default-image.png'"
+              alt="Imagen del servicio"
+              class="w-16 h-16 rounded-md object-cover"
+            />
+            <div>
+              <h3 class="text-lg font-semibold">{{ servicio.nombreNegocio }}</h3>
+              <p class="text-sm text-gray-600">{{ servicio.descripcion }}</p>
+              <p class="text-sm text-gray-500">{{ servicio.tipoServicio }}</p>
+            </div>
+          </div>
+          <div class="space-x-4">
+            <button
+              class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              (click)="modificarServicio(servicio)"
+            >
+              Modificar
+            </button>
+            <button
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              (click)="marcarComoCompletado(servicio.id)"
+            >
+              Completar
+            </button>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Formulario Dinámico -->
+      <div *ngIf="servicioSeleccionado" class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-2xl font-bold mb-4">Modificar Servicio</h2>
+        <form (ngSubmit)="guardarCambios()">
+          <div class="mb-4">
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre del Servicio</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombreNegocio"
+              [(ngModel)]="servicioSeleccionado.nombreNegocio"
+              class="w-full border rounded-lg p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+            <input
+              type="text"
+              id="telefono"
+              name="telefono"
+              [(ngModel)]="servicioSeleccionado.telefono"
+              class="w-full border rounded-lg p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="precio" class="block text-sm font-medium text-gray-700">Precio</label>
+            <input
+              type="number"
+              id="precio"
+              name="precio"
+              [(ngModel)]="servicioSeleccionado.precio"
+              class="w-full border rounded-lg p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+            <input
+              type="text"
+              id="direccion"
+              name="direccion"
+              [(ngModel)]="servicioSeleccionado.direccion"
+              class="w-full border rounded-lg p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="tipoServicio" class="block text-sm font-medium text-gray-700">Tipo de Servicio</label>
+            <input
+              type="text"
+              id="tipoServicio"
+              name="tipoServicio"
+              [(ngModel)]="servicioSeleccionado.tipoServicio"
+              class="w-full border rounded-lg p-2"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="descripcion" class="block text-sm font-medium text-gray-700">Descripción</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              [(ngModel)]="servicioSeleccionado.descripcion"
+              class="w-full border rounded-lg p-2"
+              rows="4"
+            ></textarea>
+          </div>
+          <div class="text-right">
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              type="button"
+              class="bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400"
+              (click)="cancelarEdicion()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
   </div>
-</body>
-</html>
+</div>

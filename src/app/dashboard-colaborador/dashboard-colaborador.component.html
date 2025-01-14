@@ -55,7 +55,7 @@
           <!-- Card 1 -->
           <div class="bg-white shadow rounded-lg p-6">
             <h2 class="text-lg font-semibold text-gray-700">Eventos Activos</h2>
-            <p class="mt-2 text-3xl font-bold text-blue-600">12</p>
+            <p class="mt-2 text-3xl font-bold text-blue-600">{{activeServices}}</p>
           </div>
           <!-- Card 2 -->
           <div class="bg-white shadow rounded-lg p-6">
@@ -65,11 +65,53 @@
           <!-- Card 3 -->
           <div class="bg-white shadow rounded-lg p-6">
             <h2 class="text-lg font-semibold text-gray-700">Ingresos Netos</h2>
-            <p class="mt-2 text-3xl font-bold text-yellow-600">7</p>
+            <p class="mt-2 text-3xl font-bold text-yellow-600">{{ ingresosNetos | currency }}</p>
           </div>
         </div>
+
+<!-- Servicios Activos -->
+<div class="mt-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Servicios Activos</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Tarjetas de servicios -->
+    <div
+      *ngFor="let servicio of servicios"
+      class="bg-white shadow rounded-lg p-4 cursor-pointer hover:shadow-lg"
+      (click)="verDetalle(servicio)"
+    > 
+      <!-- Mostrar Nombre del Negocio, Teléfono y Precio -->
+      <h3 class="text-lg font-semibold text-blue-600">{{ servicio.nombreNegocio }}</h3>
+      <p class="text-sm text-gray-500">Teléfono: {{ servicio.telefono }}</p>
+      <p class="text-sm text-gray-500">Precio: {{ servicio.precio }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Detalles del Servicio -->
+<div class="mt-8" *ngIf="servicioSeleccionado">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalles del Servicio</h2>
+  <div class="bg-white shadow rounded-lg p-6">
+    <h3 class="text-xl font-semibold text-blue-600">{{ servicioSeleccionado.nombreNegocio }}</h3>
+    <p class="mt-2 text-gray-700">Descripción: {{ servicioSeleccionado.descripcion }}</p>
+    <p class="mt-2 text-gray-700">Teléfono: {{ servicioSeleccionado.telefono }}</p>
+    <p class="mt-2 text-gray-700">Dirección: {{ servicioSeleccionado.direccion }}</p>
+    <p class="mt-2 text-gray-700">Tipo de Servicio: {{ servicioSeleccionado.tipoServicio }}</p>
+    <p class="mt-2 text-gray-700">Precio: {{ servicioSeleccionado.precio }}</p>
+
+        <!-- Botón de Eliminar -->
+        <button
+        class="mt-4 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+        (click)="eliminarServicio(servicioSeleccionado.id)"
+      >
+        Eliminar Servicio
+      </button>
+
+  </div>
+</div>
+
       </main>
     </div>
   </div>
+
 </body>
 </html>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { Servicio } from '../app/dashboard-colaborador/colaborator-events/colaborator-events.component';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,7 @@ export class AuthService {
   ): Observable<any> {
   
     const formData = new FormData();
-    
+    console.log('nombreNegocio en el FormData:', nombreNegocio); // Asegúrate de que no es null
     formData.append('nombreNegocio', nombreNegocio);
     formData.append('descripcion', descripcion);
     formData.append('tipoServicio', tipoServicio);
@@ -85,9 +86,39 @@ export class AuthService {
     return this.http.get<any[]>(`${this.apiUrl}/evento/GET/${userId}`);
   }
 
+  getServicesByEmail(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/colaboradores/getServices/${email}`);
+  }
+
+  getAllServices(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/colaboradores/servicios`);
+  }
+
+
   deleteEventById(idEvent: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/evento/DELETE/${idEvent}`, { responseType: 'text' });
   }
+
+  deleteServiceById(idSerivice: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/colaboradores/DELETE/${idSerivice}`, { responseType: 'text' });
+  }
+  
+  updateService(servicio: Servicio): Observable<Servicio> {
+    const token = localStorage.getItem('jwtToken');  // Asegúrate de que el token JWT esté disponible
+
+    if (token) {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        console.log(servicio)  // Asegúrate de que el encabezado Authorization esté presente
+        return this.http.put<Servicio>(`${this.apiUrl}/colaboradores/PUT/${servicio.id}`, servicio, { headers });
+    } else {
+        console.error('No se encontró el token');
+        throw new Error('No se encontró el token');
+    }
+}
+
+
+  
+  
   
   
 
