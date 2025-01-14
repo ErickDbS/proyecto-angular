@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventos Activos</title>
+  <title>Colaboradores</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans flex flex-col min-h-screen">
   <!-- Header -->
   <header class="bg-blue-500 text-white py-4 shadow">
     <div class="container mx-auto flex justify-between items-center px-4">
-      <h1 class="text-2xl font-bold">Eventos Activos</h1>
+      <h1 class="text-2xl font-bold">Colaboradores</h1>
       <nav class="flex space-x-4">
         <a href="#" class="hover:underline" [routerLink]="['../home']">Eventos</a>
         <a href="#" class="hover:underline" [routerLink]="['../colaboradores']">Colaboradores</a>
@@ -21,26 +21,19 @@
     </div>
   </header>
 
-  <p class="inline-block mr-4 text-black-500 text-2xl m-5">Bienvenido, {{ currentUser }}</p>
   <!-- Main Content -->
   <main class="container mx-auto py-8 px-4 flex-grow">
-    <!-- Event Cards -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let evento of eventos" class="bg-white shadow rounded-lg p-4">
-        <img [src]="'http://localhost:8080' + evento.imagenUrl || 'ruta/default/imagen.png'" alt="{{ evento.nombre }}" class="w-full h-40 object-cover rounded">
-        <h2 class="text-lg font-semibold text-gray-800">{{ evento.nombre }}</h2>
-        <p class="text-sm text-gray-600 mt-2">{{ evento.descripcion }}</p>
-        <p class="text-sm text-gray-600 mt-2">Fecha: {{ evento.fecha }}</p>
-        <p class="text-sm text-gray-600 mt-2">Lugar: {{ evento.lugar }}</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-red-500 hover:bg-red-600 py-1 px-3 rounded" (click)="deleteEvent(evento.id)">Eliminar</button>
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Abrir</button>
-          <button class="text-blue-500 underline" (click)="compartirEnlace(evento)">Compartir enlace</button>
-        </div>
-      </div>
+    <div *ngFor="let evento of eventos" class="bg-white p-6 rounded-lg shadow-lg mb-6">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-2">{{ evento.nombre }}</h2>
+      <p class="text-gray-500">Fecha: {{ evento.fecha }}</p>
       
-    </section>
-    
+      <ul class="mt-4 space-y-2">
+        <li *ngFor="let invitado of invitados[evento.id]" class="p-4 bg-gray-50 rounded-lg shadow-sm flex justify-between items-center">
+          <span class="text-gray-700">{{ invitado.nombre }}</span>
+          <span class="text-sm text-green-500">{{ invitado.confirmado ? 'Confirmado' : 'Pendiente' }}</span>
+        </li>
+      </ul>
+    </div>
   </main>
 
   <!-- Footer -->

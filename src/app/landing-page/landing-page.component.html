@@ -6,64 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mockup Page</title>
 
-  <style>
-    .carousel-image {
-      height: 400px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px 0;
-      margin-top: 50px;
-    }
-
-    .footer-nav a, .social-icons a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .footer-nav a:hover, .social-icons a:hover {
-      text-decoration: underline;
-    }
-
-    .carousel-container {
-      max-width: 800px; /* Limita el ancho del carrusel */
-      width: 100%; /* Se adapta al contenedor */
-    }
-
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: 100px;
-      min-height: 80vh; /* Asegura que el carrusel esté centrado verticalmente */
-    }
-  </style>
-
-  <!-- Bootstrap CSS -->
-  <link 
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-    rel="stylesheet"
-  />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+
+<body class="font-sans bg-gray-100">
+
   <!-- Header -->
-  <header class="bg-white border-bottom py-3">
-    <div class="container d-flex justify-content-between align-items-center">
-      <h1 class="h3 m-0">Events</h1>
-      <button class="btn btn-primary" [routerLink]="['./login']" >Iniciar Sesion</button>
-      <button class="btn btn" [routerLink]="['./registrar']" >Registrarse</button>
+  <header class="bg-white border-b py-3">
+    <div class="container mx-auto flex justify-between items-center px-6">
+      <h1 class="text-2xl font-bold">Events</h1>
+      <div class="space-x-4">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="window.location.href='./login'">Iniciar Sesion</button>
+        <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300" onclick="window.location.href='./registrar'">Registrarse</button>
+      </div>
     </div>
   </header>
 
-
   <!-- Main Content -->
-  <main>
-    <div class="carousel-container text-center">
-      <!-- Bootstrap Carousel -->
+  <main class="flex justify-center items-center min-h-[80vh]">
+    <div class="carousel-container text-center w-full max-w-3xl">
+      <!-- Carousel -->
       <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <!-- Indicadores -->
         <div class="carousel-indicators">
@@ -71,26 +34,26 @@
           <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        
+
         <!-- Imágenes -->
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="https://imgs.search.brave.com/QGBYjtrtbCDW0QTqALjqIUU0M_ZCdXehKyygLcQ0pTk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yb2Nr/Y29udGVudC5jb20v/ZXMvd3AtY29udGVu/dC91cGxvYWRzL3Np/dGVzLzMvMjAyMi8w/Ny9nb29nbGUtaW1h/Z2VzLTIzLnBuZw" class="d-block w-100 carousel-image" alt="Imagen 1">
+            <img src="https://imgs.search.brave.com/QGBYjtrtbCDW0QTqALjqIUU0M_ZCdXehKyygLcQ0pTk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9yb2Nr/Y29udGVudC5jb20v/ZXMvd3AtY29udGVu/dC91cGxvYWRzL3Np/dGVzLzMvMjAyMi8w/Ny9nb29nbGUtaW1h/Z2VzLTIzLnBuZw" class="d-block w-full rounded-lg object-cover h-96" alt="Imagen 1">
           </div>
           <div class="carousel-item">
-            <img src="/src/img/img2.png" class="d-block w-100 carousel-image" alt="Imagen 2">
+            <img src="/src/img/img2.png" class="d-block w-full rounded-lg object-cover h-96" alt="Imagen 2">
           </div>
           <div class="carousel-item">
-            <img src="/src/img/img3.png" class="d-block w-100 carousel-image" alt="Imagen 3">
+            <img src="/src/img/img3.png" class="d-block w-full rounded-lg object-cover h-96" alt="Imagen 3">
           </div>
         </div>
-        
+
         <!-- Controles de navegación -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <button class="carousel-control-prev absolute top-1/2 left-0 transform -translate-y-1/2 text-white p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Anterior</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <button class="carousel-control-next absolute top-1/2 right-0 transform -translate-y-1/2 text-white p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Siguiente</span>
         </button>
@@ -98,23 +61,21 @@
     </div>
   </main>
 
-  
-
   <!-- Footer -->
-  <footer>
-      <div class="social-icons d-flex justify-content-center gap-4">
-        <a href="#">YouTube</a>
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
-        <a href="#">LinkedIn</a>
+  <footer class="bg-gray-800 text-white py-6 mt-12">
+    <div class="container mx-auto text-center">
+      <div class="social-icons space-x-6">
+        <a href="#" class="hover:underline">YouTube</a>
+        <a href="#" class="hover:underline">Facebook</a>
+        <a href="#" class="hover:underline">Twitter</a>
+        <a href="#" class="hover:underline">Instagram</a>
+        <a href="#" class="hover:underline">LinkedIn</a>
       </div>
+    </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS (For Carousel) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
-
 </html>
-

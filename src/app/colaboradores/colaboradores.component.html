@@ -15,32 +15,51 @@
         <a href="#" class="hover:underline" [routerLink]="['../home']">Eventos</a>
         <a href="#" class="hover:underline" [routerLink]="['../colaboradores']">Colaboradores</a>
         <a href="#" class="hover:underline" [routerLink]="['../crear evento']">Nuevo evento</a>
-        <a href="#" class="hover:underline">Invitados</a>
+        <a href="#" class="hover:underline" [routerLink]="['../invitados']">Invitados</a>
         <button href="#" class="hover:underline text-red-300">LogOut</button>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="container mx-auto py-8 px-4 flex-grow">
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let servicio of servicios" class="bg-white shadow rounded-lg p-4">
-        <img [src]="'http://localhost:8080' + servicio.imagenUrl || 'assets/default-image.png'" 
-             alt="{{ servicio.nombre }}" 
-             class="w-full h-40 object-cover rounded">
-        <h2 class="text-lg font-semibold text-gray-800">{{ servicio.nombreNegocio }}</h2>
-        <p class="text-sm text-gray-600 mt-2">Teléfono: {{ servicio.telefono }}</p>
-        <p class="text-sm text-gray-600 mt-2">Precio: ${{ servicio.precio }}</p>
-        <p class="text-sm text-gray-600 mt-2">{{ servicio.descripcion }}</p>
-        <p class="text-sm text-gray-600 mt-2">Dirección: {{ servicio.direccion }}</p>
-        <div class="mt-4 flex justify-between items-center">
-          <button class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">Contratar</button>
-        </div>
+<!-- Main Content -->
+<main class="container mx-auto py-8 px-4 flex-grow">
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let servicio of servicios" class="bg-white shadow rounded-lg p-4">
+      <img [src]="'http://localhost:8080' + servicio.imagenUrl || 'assets/default-image.png'" 
+           alt="{{ servicio.nombre }}" 
+           class="w-full h-40 object-cover rounded">
+      <h2 class="text-lg font-semibold text-gray-800">{{ servicio.nombreNegocio }}</h2>
+      <p class="text-sm text-gray-600 mt-2">Teléfono: {{ servicio.telefono }}</p>
+      <p class="text-sm text-gray-600 mt-2">Precio: ${{ servicio.precio }}</p>
+      <p class="text-sm text-gray-600 mt-2">{{ servicio.descripcion }}</p>
+      <p class="text-sm text-gray-600 mt-2">Dirección: {{ servicio.direccion }}</p>
+      <div class="mt-4 flex justify-between items-center">
+        <button (click)="abrirModal(servicio)" class="text-sm text-white bg-blue-500 hover:bg-blue-600 py-1 px-3 rounded">
+          Contratar
+        </button>
       </div>
-    </section>
-    
-    
-  </main>
+    </div>
+  </section>
+</main>
+
+<!-- Modal -->
+<div *ngIf="modalVisible" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg p-6 w-96">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Vas a contratar el servicio</h2>
+    <p class="text-sm text-gray-600">Servicio: {{ servicioSeleccionado?.nombreNegocio }}</p>
+    <p class="text-sm text-gray-600">Precio: ${{ servicioSeleccionado?.precio }}</p>
+    <div class="mt-4 flex justify-between items-center">
+      <button (click)="confirmarContratacion()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        Confirmar
+      </button>
+      <button (click)="cerrarModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
 
   <!-- Footer -->
   <footer class="bg-gray-800 text-white py-4">

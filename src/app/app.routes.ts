@@ -42,5 +42,14 @@ export const routes: Routes = [
   {
     path: 'nuevo-servicio',
     loadComponent: ()=> import('./dashboard-colaborador/create-colaborator-service/create-colaborator-service.component')
+  },
+  {
+    path: 'invitados',
+    loadComponent: ()=> import('./invitados/invitados.component'),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'registro-invitados/:id',
+    loadComponent: ()=> import('./registro-invitados/registro-invitados.component')
   }
   ];

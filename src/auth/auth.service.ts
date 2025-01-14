@@ -86,6 +86,41 @@ export class AuthService {
     return this.http.get<any[]>(`${this.apiUrl}/evento/GET/${userId}`);
   }
 
+  // auth.service.ts
+  obtenerInvitadosPorEvento(eventoId: number): Observable<any[]> {
+    const token = localStorage.getItem('jwtToken');  // O cualquier otro lugar donde guardes el token
+
+    // Si no se encuentra el token, manejar el caso adecuadamente
+    if (!token) {
+      console.error('Token de autenticación no encontrado');
+      return new Observable();  // Puedes devolver un Observable vacío si no hay token
+    }
+
+    // Añadir el token a las cabeceras de la solicitud
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<any[]>(`${this.apiUrl}/invitados/evento/${eventoId}`, { headers });
+  }
+
+  // auth.service.ts
+  obtenerEventoPorId(eventoId: number): Observable<any> {
+    const token = localStorage.getItem('jwtToken'); // O la forma en que almacenes el token
+    return this.http.get<any>(`${this.apiUrl}/eventos/getEvento/${eventoId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+  
+  
+  
+
+
+registrarInvitado(eventoId: number, nombre: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/invitados/registrar/${eventoId}?nombre=${nombre}`, {});
+}
+
+
   getServicesByEmail(email: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/colaboradores/getServices/${email}`);
   }
